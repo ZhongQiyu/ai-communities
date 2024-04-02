@@ -40,3 +40,4 @@ gfpgan-patch
 av
 safetensors
 easydict
+pika
