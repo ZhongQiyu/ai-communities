@@ -41,3 +41,4 @@ av
 safetensors
 easydict
 pika
+retrying
