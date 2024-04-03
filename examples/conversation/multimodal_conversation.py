@@ -159,7 +159,7 @@ def main():
                 raise e
             except Exception as e:
                     print("exception: ", e)
-                    send_chat_msg(f"对不起，您没有上传图片或者您上传的图片不符合要求，请重新上传一张图片，面部特征要清晰",
+                    send_chat_msg(f"对不起，您没有上传图片或者您上传的图片不符合要求，请重新上传一张图片",
                                   role=master_agent.name,
                                   flushing=True,
                                   uid=uid,

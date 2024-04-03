@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 import argparse
-import asyncio
 import base64
 import os
-import datetime
-import subprocess
 import sys
 import threading
 import time
@@ -136,17 +133,6 @@ def get_chat(uid) -> List[List]:
 
     return dial_msg[-MAX_NUM_DISPLAY_MSG:]
 
-
-
-# def transcribe(audio_term, uid):
-#     uid = check_uuid(uid)
-#     content = audio2text(audio_path=audio_term)
-#     send_player_input(content, uid=uid)
-#     msg = f"""{content}
-#     <audio src="{audio_term}"></audio>"""
-#     send_player_msg(msg, "我", uid=uid, avatar=None)
-#     # return content
-
 def send_image(image_term, uid):
     uid = check_uuid(uid)
     # content = convert_image_to_base64(image_term)
@@ -243,48 +229,26 @@ def run_app():
     with gr.Blocks(css="assets/app.css") as demo:
         warning_html_code = """
                 <div class="hint" style="text-align: center;background-color: rgba(255, 255, 0, 0.15); padding: 10px; margin: 10px; border-radius: 5px; border: 1px solid #ffcc00;">
-                    <p>如果视频一直生成不成功，请尝试点击最下方的 <strong>重置</strong>按钮，<strong>刷新页面</strong>重新开始。</p>
-                    <p>🌟本样例基于<a href="https://github.com/modelscope/agentscope">AgentScope</a>多智体平台搭建。</p>
+                    <p>如果图片一直生成不成功，请尝试点击最下方的 <strong>重置</strong>按钮，<strong>刷新页面</strong>重新开始。</p>
+                    <p>🌟选择房间类型和风格后上传图片即可生成效果图，不上传图片可以随机生成效果图！🌟</p>
                 </div>
                 """
         gr.HTML(warning_html_code)
         uuid = gr.Textbox(label="modelscope_uuid", visible=False)
 
-        # game_tabs = gr.Tabs(visible=True)
-        #
-        # with game_tabs:
-            # main_tab = gr.Tab("主界面", id=0)
-            # with main_tab:
         with gr.Row():
-            # with gr.Column(min_width=270):
-            chatbot = mgr.Chatbot(
-                elem_classes="app-chatbot",
-                label="Dialog",
-                show_label=False,
-                bubble_full_width=False,
-                visible=True,
-            )
-        # with gr.Column():
-        #     start_button = gr.Button(value="开始")
+            with gr.Column(scale=2.5):
+                # with gr.Column(min_width=270):
+                chatbot = mgr.Chatbot(
+                    elem_classes="app-chatbot",
+                    label="Dialog",
+                    show_label=False,
+                    bubble_full_width=False,
+                    visible=True,
+                )
 
-        with gr.Column():
-            user_chat_input = gr.Textbox(
-                label="user_chat_input",
-                placeholder="想说点什么",
-                show_label=False,
-            )
 
-            send_button = gr.Button(value="📣发送")
-            with gr.Row():
-                audio = gr.Accordion("语音输入", open=True)
-                with audio:
-                    audio_term = gr.Audio(
-                        # label="语音输入",
-                        visible=True,
-                        type="filepath",
-                        format="wav",
-                    )
-                    submit_audio_button = gr.Button(value="发送录音")
+            with gr.Column(scale=1):
                 image = gr.Accordion("图片输入", open=True)
                 with image:
                     image_term = gr.Image(
@@ -294,8 +258,18 @@ def run_app():
                         interactive=True,
                         type="filepath",
                     )
-                    submit_image_button = gr.Button(value="发送图片")
-            reset_button = gr.Button(value="重置")
+                    submit_image_button = gr.Button(value="生成效果图")
+
+                text_input = gr.Accordion("文字输入", open=True)
+                with text_input:
+                    user_chat_input = gr.Textbox(
+                        label="user_chat_input",
+                        placeholder="想说点什么",
+                        show_label=False,
+                    )
+
+                    send_button = gr.Button(value="📣发送")
+                reset_button = gr.Button(value="重置")
 
 
         def send_message(msg, uid):
@@ -316,8 +290,6 @@ def run_app():
             send_reset_msg("**Reset**", uid=uid)
             return ""
 
-        # start_button.click(send_reset_message, inputs=[uuid]).then(check_for_new_session, inputs=[uuid])
-
         # submit message
         send_button.click(
             send_message,
@@ -329,8 +301,6 @@ def run_app():
             [user_chat_input, uuid],
             user_chat_input,
         )
-
-        # submit_audio_button.click(transcribe, inputs=[audio_term, uuid], outputs=[audio_term])
 
         submit_image_button.click(send_image, inputs=[image_term, uuid], outputs=[image_term])
 
