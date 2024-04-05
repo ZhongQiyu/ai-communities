@@ -88,7 +88,8 @@ class DecorationGenerateAgent(AgentBase):
         self.corr_id = str(uuid.uuid4())
 
         image_oss_key = os.path.join(config['OSS_UPLOAD_IMAGE_DIR'], self.corr_id + '.jpg')
-        self.upload_image(image_oss_key, source_image)
+        if source_image:
+            self.upload_image(image_oss_key, source_image)
 
         room_type_map = {
             "客餐厅": "living_dining_room",
@@ -113,6 +114,9 @@ class DecorationGenerateAgent(AgentBase):
             "style": room_style_map[room_style],
             "roomType": room_type_map[room_type]
         }
+        if source_image is None:
+            message["request_type"] = 'wst'
+            message["sourceUrl"] = ''
         message = json.dumps(message)
 
 

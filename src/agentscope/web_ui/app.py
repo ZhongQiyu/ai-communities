@@ -138,8 +138,10 @@ def send_image(image_term, uid):
     # content = convert_image_to_base64(image_term)
     # send_player_input(content, uid=uid)
     send_player_input(image_term, uid=uid)
-
-    msg = f"""<img src="{image_term}"></img>"""
+    if image_term:
+        msg = f"""<img src="{image_term}"></img>"""
+    else:
+        msg = f"""没有上传图片，根据所选房间类型和风格随机生成效果图。"""
     avatar = generate_image_from_name("我")
     send_player_msg(msg, "我", uid=uid, avatar=avatar)
 
@@ -230,7 +232,7 @@ def run_app():
         warning_html_code = """
                 <div class="hint" style="text-align: center;background-color: rgba(255, 255, 0, 0.15); padding: 10px; margin: 10px; border-radius: 5px; border: 1px solid #ffcc00;">
                     <p>如果图片一直生成不成功，请尝试点击最下方的 <strong>重置</strong>按钮，<strong>刷新页面</strong>重新开始。</p>
-                    <p>🌟选择房间类型和风格后上传图片即可生成效果图，不上传图片可以随机生成效果图！🌟</p>
+                    <p>🌟选择房间类型和风格后上传图片点击生成效果图按钮即可生成效果图，不上传图片会根据所选房间类型和风格随机生成效果图！🌟</p>
                 </div>
                 """
         gr.HTML(warning_html_code)

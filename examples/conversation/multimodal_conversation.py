@@ -93,7 +93,7 @@ def main():
         while True:
             answer_room_type = query_answer(questions_room_type, "ans", uid=uid)
             if isinstance(answer_room_type, str):
-                time.sleep(0.5)
+                time.sleep(0.1)
                 send_chat_msg(
                     f"请在列表中选择。",
                     uid=uid,
@@ -122,7 +122,7 @@ def main():
         while True:
             answer_room_style = query_answer(questions_room_style, "ans", uid=uid)
             if isinstance(answer_room_style, str):
-                time.sleep(0.5)
+                time.sleep(0.1)
                 send_chat_msg(
                     f"请在列表中选择。",
                     uid=uid,
@@ -142,7 +142,7 @@ def main():
                 msg = user_agent()
                 source_image = msg["content"]
                 # print("图片信息：", msg)
-                time.sleep(0.5)
+                time.sleep(0.1)
                 send_chat_msg(f"接下来，图片生成助手会生成对应的效果图",
                               role=master_agent.name,
                               flushing=True,
