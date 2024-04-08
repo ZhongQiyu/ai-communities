@@ -231,7 +231,7 @@ def run_app():
     with gr.Blocks(css="assets/app.css") as demo:
         warning_html_code = """
                 <div class="hint" style="text-align: center;background-color: rgba(255, 255, 0, 0.15); padding: 10px; margin: 10px; border-radius: 5px; border: 1px solid #ffcc00;">
-                    <p>如果图片一直生成不成功，请尝试点击最下方的 <strong>重置</strong>按钮，<strong>刷新页面</strong>重新开始。</p>
+                    <p>如果图片一直生成不成功，请尝试点击最下方的 <strong>重置</strong>按钮，再按<strong>F5</strong>刷新页面重新开始。</p>
                     <p>🌟选择房间类型和风格后上传图片点击生成效果图按钮即可生成效果图，不上传图片会根据所选房间类型和风格随机生成效果图！🌟</p>
                     <p>🌟生成效果图后可以在输入框中输入文字对效果图进行编辑！🌟</p>
                 </div>
