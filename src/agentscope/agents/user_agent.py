@@ -14,7 +14,7 @@ from agentscope.web_ui.utils import get_player_input, generate_image_from_name, 
 class UserAgent(AgentBase):
     """User agent class"""
 
-    def __init__(self, name: str = "User", require_url: bool = False) -> None:
+    def __init__(self, name: str = "user", require_url: bool = False) -> None:
         """Initialize a UserAgent object.
 
         Arguments:
@@ -64,7 +64,7 @@ class UserAgent(AgentBase):
 
         # TODO: To avoid order confusion, because `input` print much quicker
         #  than logger.chat
-        time.sleep(0.5)
+        time.sleep(0.1)
         thread_name = threading.current_thread().name
         if thread_name == "MainThread":
             content = input(f"{self.name}: ")
@@ -91,6 +91,7 @@ class UserAgent(AgentBase):
         msg = Msg(
             self.name,
             content=content,
+            role="user",
             url=url,
             **kwargs,  # type: ignore[arg-type]
         )

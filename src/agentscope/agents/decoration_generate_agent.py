@@ -15,10 +15,6 @@ import json
 from OSSUtil import getBucketByPackagerepository, upload_file_2_oss, downloadOSSFile
 
 config = {
-'MQ_HOST' : 'mq-test.123kanfang.com',
-'MQ_USER_NAME' : 'livedecoservice',
-'MQ_PASSWORD' : 'a498cd8e2372409eaca8f1eee5000b51',
-'QUEUE_NAME' : 'CN.AIGC.Add.Command',
 'MQ_PORT' : 5672,
 'VIRTUAL_HOST' : '/',
 'OSS_UPLOAD_IMAGE_DIR' : 'deco_upload',
@@ -31,7 +27,9 @@ class DecorationGenerateAgent(AgentBase):
     def __init__(
             self,
             name: str,
-            bucket_str: str,
+            bucket: None,
+            connection: None,
+            channel: None,
             sys_prompt: Optional[str] = None,
             model_config_name: str = None,
             use_memory: bool = True,
@@ -60,17 +58,21 @@ class DecorationGenerateAgent(AgentBase):
             use_memory=use_memory,
             memory_config=memory_config,
         )
-        self.bucket_str = bucket_str
-        self.bucket = getBucketByPackagerepository(self.bucket_str)
+        # self.bucket_str = bucket_str
+        # self.bucket = getBucketByPackagerepository(self.bucket_str)
+        #
+        # credentials = pika.PlainCredentials(config['MQ_USER_NAME'], config['MQ_PASSWORD'])
+        # node = pika.ConnectionParameters(host=config['MQ_HOST'], port=config['MQ_PORT'],
+        #                                  virtual_host=config['VIRTUAL_HOST'],
+        #                                  credentials=credentials, connection_attempts=5, retry_delay=5)
+        #
+        # self.connection = pika.BlockingConnection([node])
+        #
+        # self.channel = self.connection.channel()
 
-        credentials = pika.PlainCredentials(config['MQ_USER_NAME'], config['MQ_PASSWORD'])
-        node = pika.ConnectionParameters(host=config['MQ_HOST'], port=config['MQ_PORT'],
-                                         virtual_host=config['VIRTUAL_HOST'],
-                                         credentials=credentials, connection_attempts=5, retry_delay=5)
-
-        self.connection = pika.BlockingConnection([node])
-
-        self.channel = self.connection.channel()
+        self.bucket = bucket
+        self.connection = connection
+        self.channel = channel
 
         result = self.channel.queue_declare(queue='', exclusive=True)
         self.callback_queue = result.method.queue
@@ -121,8 +123,8 @@ class DecorationGenerateAgent(AgentBase):
 
 
         self.response = None
-        self.channel.basic_publish(exchange=config['QUEUE_NAME'],
-                                   routing_key=config['QUEUE_NAME'],
+        self.channel.basic_publish(exchange=os.getenv('QUEUE_NAME'),
+                                   routing_key=os.getenv('QUEUE_NAME'),
                                    properties=pika.BasicProperties(
                                        reply_to=self.callback_queue,
                                        correlation_id=self.corr_id,
@@ -139,7 +141,9 @@ class DecorationGenerateAgent(AgentBase):
         msg = Msg(self.name, os.path.join(current_img_dir, '0.png'))
         self.memory.add(msg)
         self.speak(msg)
-        return msg
+
+        # image_path = os.path.join(current_img_dir, '0.png')
+        return created_image_oss_key
 
 
     def speak(self, x):
