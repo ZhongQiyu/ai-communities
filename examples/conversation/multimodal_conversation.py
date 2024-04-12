@@ -107,12 +107,12 @@ def main():
     uid = thread_name
     # start the conversation between user and assistant
 
+    master_avatar = generate_image_from_name(master_agent.name)
+    # sadtalker_avatar = generate_image_from_name(sadtalker_agent.name)
+    decoration_generate_avatar = generate_image_from_name(decoration_generate_agent.name)
+    edit_image_avatar = generate_image_from_name(edit_image_agent.name)
     x = None
-    while x is None or x.content != "退出。":
-        master_avatar = generate_image_from_name(master_agent.name)
-        # sadtalker_avatar = generate_image_from_name(sadtalker_agent.name)
-        decoration_generate_avatar = generate_image_from_name(decoration_generate_agent.name)
-        edit_image_avatar = generate_image_from_name(edit_image_agent.name)
+    while x is None or x.content != "exit":
 
         send_chat_msg(
             f"您好，欢迎体验未来空间多模态应用，您可以上传一张待装修的房间照片、选择房间类型和装修风格，就会生成对应装修效果图。",
@@ -235,7 +235,7 @@ def main():
                 raise e
             except Exception as e:
                     print("exception: ", e)
-                    send_chat_msg(f"对不起，您没有上传图片或者您上传的图片不符合要求，请重新上传一张图片",
+                    send_chat_msg(f"对不起，在图片中没有找到你需要编辑的物品，请重新输入",
                                   role=master_agent.name,
                                   flushing=True,
                                   uid=uid,

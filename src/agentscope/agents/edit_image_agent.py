@@ -132,18 +132,22 @@ class EditImageAgent(AgentBase):
                                    body=str(message))
         while self.response is None:
             self.connection.process_data_events()
-        current_img_dir = os.path.join(self.image_dir, self.corr_id)
-        if not os.path.exists(current_img_dir):
-            os.makedirs(current_img_dir)
-        created_image_oss_key = 'AIGCs/' + self.corr_id + '/0.png'
-        downloadOSSFile(self.bucket, created_image_oss_key, current_img_dir)
+        if self.response.decode() == 'failed':
+            e = Exception()
+            raise e
+        else:
+            current_img_dir = os.path.join(self.image_dir, self.corr_id)
+            if not os.path.exists(current_img_dir):
+                os.makedirs(current_img_dir)
+            created_image_oss_key = 'AIGCs/' + self.corr_id + '/0.png'
+            downloadOSSFile(self.bucket, created_image_oss_key, current_img_dir)
 
-        msg = Msg(self.name, os.path.join(current_img_dir, '0.png'))
-        self.memory.add(msg)
-        self.speak(msg)
+            msg = Msg(self.name, os.path.join(current_img_dir, '0.png'))
+            self.memory.add(msg)
+            self.speak(msg)
 
-        # image_path = os.path.join(current_img_dir, '0.png')
-        return created_image_oss_key
+            # image_path = os.path.join(current_img_dir, '0.png')
+            return created_image_oss_key
 
     def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
