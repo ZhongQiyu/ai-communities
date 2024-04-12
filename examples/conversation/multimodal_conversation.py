@@ -225,7 +225,7 @@ def main():
                 # print("图片信息：", msg)
                 time.sleep(0.1)
                 send_chat_msg(f"已收到信息，正在编辑效果图，请稍等",
-                              role=decoration_generate_agent.name,
+                              role=edit_image_agent.name,
                               flushing=True,
                               uid=uid,
                               avatar=edit_image_avatar)
