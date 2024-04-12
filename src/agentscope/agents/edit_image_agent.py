@@ -98,6 +98,7 @@ class EditImageAgent(AgentBase):
         msg = Msg(self.name, x["user_input"], role="user")
         # record the input if needed
         if self.memory:
+            self.memory.clear()
             self.memory.add(msg)
 
         # prepare prompt
