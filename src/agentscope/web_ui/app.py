@@ -34,8 +34,8 @@ import re
 
 enable_web_ui()
 
-MAX_NUM_DISPLAY_MSG = 20
-FAIL_COUNT_DOWN = 30
+MAX_NUM_DISPLAY_MSG = 20000
+FAIL_COUNT_DOWN = 300
 
 
 def init_uid_list():
@@ -248,6 +248,7 @@ def run_app():
                     show_label=False,
                     bubble_full_width=False,
                     visible=True,
+                    height=800
                 )
 
 
