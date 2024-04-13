@@ -247,8 +247,7 @@ def run_app():
                     label="Dialog",
                     show_label=False,
                     bubble_full_width=False,
-                    visible=True,
-                    height=800
+                    visible=True
                 )
 
 
