@@ -4,5 +4,5 @@ The splits are the repos of the collected papers and written code based on Dataw
 
 - AtomGit (开放原子)
 - InternLM (书生)
-- wisemodel.cn ()
+- wisemodel.cn (始智)
 - ModelScope (魔搭)
