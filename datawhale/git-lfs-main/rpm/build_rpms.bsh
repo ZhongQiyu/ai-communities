@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+
+set -eu
+
+CURDIR=$(cd $(dirname ${BASH_SOURCE[0]}); pwd)
+
+VERSION_ID=$(source /etc/os-release; echo ${VERSION_ID%%.*})
+OS_NAME=$(source /etc/os-release; echo ${NAME})
+OS_NAME=${OS_NAME,,}
+
+case "${OS_NAME}" in
+  centos*|red*|almalinux|rocky*)
+    RPM_DIST=".el${VERSION_ID}"
+    ;;
+  fedora)
+    RPM_DIST=".fc${VERSION_ID}"
+    ;;
+  sles)
+    RPM_DIST=".sles${VERSION_ID}"
+    ;;
+  opensuse)
+    RPM_DIST=".opensuse${VERSION_ID}"
+    ;;
+  *)
+    RPM_DIST="%{nil}"
+    ;;
+esac
+
+RPMBUILD=(rpmbuild --define "_topdir ${CURDIR}" --define "dist ${RPM_DIST}")
+
+SUDO=${SUDO=`if command -v sudo > /dev/null 2>&1; then echo sudo; fi`}
+export PATH=${PATH}:/usr/local/bin
+
+set -vx
+
+SPEC=${CURDIR}/SPECS/git-lfs.spec
+
+$SUDO yum install -y rpm-build
+
+mkdir -p ${CURDIR}/{BUILD,BUILDROOT,SOURCES,RPMS,SRPMS}
+
+if ! command -v asciidoctor; then
+  echo "Downloading Asciidoctor ruby gem..."
+  pushd ${CURDIR}/SOURCES
+    curl -L -O https://rubygems.org/downloads/asciidoctor-2.0.17.gem
+  popd
+
+  echo "Building Asciidoctor ruby gem..."
+  "${RPMBUILD[@]}" -ba ${CURDIR}/SPECS/rubygem-asciidoctor.spec
+
+  echo "Installing Asciidoctor ruby gem..."
+  $SUDO yum install -y --nogpgcheck $(ls ${CURDIR}/RPMS/noarch/rubygem-*.rpm | grep -v debuginfo)
+fi
+
+rm -fr ${CURDIR}/{BUILD,BUILDROOT}
+mkdir -p ${CURDIR}/{BUILD,BUILDROOT}
+
+pushd ${CURDIR}/..
+  #Yes, compile lfs before compiling lfs...
+  FORCE_LOCALIZE=true make
+  #Use the version output to grab the version number and short sha
+  #(that yes, I could have gotten from git myself)
+  LFS_VERSION=$(./bin/git-lfs version | sed -r 's|.*/([0-9.]*).*|\1|')
+  sed -i 's|\(^Version:\s*\).*|\1'"${LFS_VERSION}"'|' "$SPEC"
+popd
+
+#Prep the SOURCES dir for git-lfs
+echo "Zipping up current checkout of git-lfs..."
+
+echo "Cleaning ${CURDIR}/tmptar"
+rm -rf ${CURDIR}/tmptar
+
+mkdir -p ${CURDIR}/tmptar/git-lfs-${LFS_VERSION}
+pushd ${CURDIR}/..
+  #I started running out of space in the docker, so I needed to copy a little less waste
+  tar -c --exclude tmptar --exclude repos . | tar -x -C ${CURDIR}/tmptar/git-lfs-${LFS_VERSION}/
+popd
+pushd ${CURDIR}/tmptar
+  tar -zcf ${CURDIR}/SOURCES/git-lfs-${LFS_VERSION}.tar.gz git-lfs-${LFS_VERSION}
+popd
+
+echo "Cleaning ${CURDIR}/tmptar again"
+rm -rf ${CURDIR}/tmptar
+
+echo "Build git-lfs RPMs..."
+
+#--no-deps added for now so you can compile without official rpms installed
+"${RPMBUILD[@]}" --nodeps -ba "$SPEC"
+"${RPMBUILD[@]}" --nodeps --target=i686 -bb "$SPEC"
+
+echo "All Done!"
