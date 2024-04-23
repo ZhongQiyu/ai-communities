@@ -118,6 +118,9 @@ class ScholarSearcher:
                 except Exception as exc:
                     print(f'{url} 生成了异常：{exc}')
 
+# define the searcher
+searcher = ScholarSearcher()
+
 # 测试从URLs获取元数据的功能
 urls = [
     "https://link.springer.com/article/10.1007/s10458-023-09601-0",
@@ -126,15 +129,14 @@ urls = [
     "https://link.springer.com/chapter/10.1007/978-3-031-49133-7_4",
     # 更多链接...
 ]
-
-crawl(urls)
+searcher.crawl(urls)
 
 # 测试搜索和文本生成功能
 search_queries = ["deep learning", "machine learning", "neural networks"]
 for query in search_queries:
     print(f"Query: {query}")
     results = search_google_scholar(query)
-
+    # retrieve the metadata of the papers
     paper = {}
     paper['title'] = result['title']
     paper['author_info'] = result['author_info']
@@ -143,7 +145,7 @@ for query in search_queries:
     # 获取并存储论文的详细内容
     paper['content'] = get_paper_details(result['link'])
     papers.append(paper)
-
+    # iterate through the papers
     for result in results:
         print(f"Title: {result['title']}")
         print("Generating text with RAG for the above title...")
