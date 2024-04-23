@@ -1,22 +1,25 @@
-japanese contextual pruning AND roleplay agent
-llm in-context learning by pruning
-word embeddings japanese
-Decision Making AND Multi-Agent AND IJCAI
-"Context Understanding in Role-Playing Agents"
-"Long-Term Memory in Multi-Agent Systems"
-"Emotional Intelligence in Role-Playing Agents"
-"Decision Making in Role-Playing Multi-Agent Systems"
-"Natural Language Generation for Role-Playing Agents"
-"Collaboration and Competition in Role-Playing Agents"
-"Ethics and Morality in Intelligent Agents"
-"Generalization Capabilities in Multi-Agent Role-Playing"
-"Real-Time Learning and Adaptability in Agents"
-"Human-Agent Interaction in Role-Playing Scenarios"
-"Explainability and Transparency in Multi-Agent Systems"
-"Multimodal Perception and Interaction in Role-Playing Agents"
-结合这些关键词与您感兴趣的会议和期刊，可以形成如下搜索查询：
-
-"Context Understanding in Role-Playing Agents" AND AAMAS
+针对 IJCAI 的搜索关键词
+"Context Understanding in Role-Playing Agents" AND IJCAI
 "Emotional Intelligence in Role-Playing Agents" AND IJCAI
-"Decision Making in Role-Playing Multi-Agent Systems" AND JAAMAS
-"Human-Agent Interaction in Role-Playing Scenarios" AND "Artificial Intelligence"
+"Decision Making in Role-Playing Multi-Agent Systems" AND IJCAI
+"Natural Language Generation for Role-Playing Agents" AND IJCAI
+"Collaboration and Competition in Role-Playing Agents" AND IJCAI
+"Ethics and Morality in Intelligent Agents" AND IJCAI
+"Generalization Capabilities in Multi-Agent Role-Playing" AND IJCAI
+"Real-Time Learning and Adaptability in Agents" AND IJCAI
+"Human-Agent Interaction in Role-Playing Scenarios" AND IJCAI
+"Explainability and Transparency in Multi-Agent Systems" AND IJCAI
+"Multimodal Perception and Interaction in Role-Playing Agents" AND IJCAI
+
+针对 AAMAS 的搜索关键词
+"Context Understanding in Role-Playing Agents" AND AAMAS
+"Emotional Intelligence in Role-Playing Agents" AND AAMAS
+"Decision Making in Role-Playing Multi-Agent Systems" AND AAMAS
+"Natural Language Generation for Role-Playing Agents" AND AAMAS
+"Collaboration and Competition in Role-Playing Agents" AND AAMAS
+"Ethics and Morality in Intelligent Agents" AND AAMAS
+"Generalization Capabilities in Multi-Agent Role-Playing" AND AAMAS
+"Real-Time Learning and Adaptability in Agents" AND AAMAS
+"Human-Agent Interaction in Role-Playing Scenarios" AND AAMAS
+"Explainability and Transparency in Multi-Agent Systems" AND AAMAS
+"Multimodal Perception and Interaction in Role-Playing Agents" AND AAMAS
