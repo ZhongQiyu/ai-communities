@@ -24,12 +24,7 @@ rpc_requires = [
     "expiringdict",
 ]
 
-service_requires = [
-    "docker",
-    "pymongo",
-    "pymysql",
-    "beautifulsoup4",
-]
+service_requires = ["docker", "pymongo", "pymysql"]
 
 doc_requires = [
     "sphinx",
@@ -41,27 +36,17 @@ doc_requires = [
 
 test_requires = ["pytest", "pytest-cov", "pre-commit"]
 
-gradio_requires = ["gradio==4.19.1", "modelscope_studio==0.0.5"]
-
 # released requires
 minimal_requires = [
-    "docstring_parser",
     "loguru",
     "tiktoken",
     "Pillow",
     "requests",
-    "chardet",
-    "inputimeout",
     "openai>=1.3.0",
     "numpy",
     "Flask==3.0.0",
     "Flask-Cors==4.0.0",
     "Flask-SocketIO==5.3.6",
-    # TODO: move into other requires
-    "dashscope==1.14.1",
-    "openai>=1.3.0",
-    "ollama>=0.1.7",
-    "google-generativeai>=0.4.0",
 ]
 
 distribute_requires = minimal_requires + rpc_requires
@@ -74,7 +59,6 @@ full_requires = (
     + service_requires
     + doc_requires
     + test_requires
-    + gradio_requires
 )
 
 with open("README.md", "r", encoding="UTF-8") as fh:
@@ -85,15 +69,14 @@ setuptools.setup(
     version=VERSION,
     author="SysML team of Alibaba Tongyi Lab ",
     author_email="gaodawei.gdw@alibaba-inc.com",
-    description="AgentScope: A Flexible yet Robust Multi-Agent Platform.",
+    description="An easy-to-use multi-agent platforms.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=URL,
-    download_url=f"{URL}/archive/v{VERSION}.tar.gz",
+    download_url=f"{URL}/archive/{VERSION}.tar.gz",
     keywords=["deep-learning", "multi agents", "agents"],
     package_dir={"": "src"},
     packages=setuptools.find_packages("src"),
-    package_data={"agentscope.web": ["static/**/*"]},
     install_requires=minimal_requires,
     extras_require={
         "distribute": distribute_requires,
@@ -109,9 +92,4 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.9",
-    entry_points={
-        "console_scripts": [
-            "as_studio=agentscope.web.studio.studio:run_app",
-        ],
-    },
 )

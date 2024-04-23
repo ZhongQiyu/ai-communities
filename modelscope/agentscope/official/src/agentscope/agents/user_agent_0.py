@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 """User Agent class"""
-import os
-import threading
 import time
 from typing import Union
 from typing import Optional
+from loguru import logger
 
 from agentscope.agents import AgentBase
 from agentscope.message import Msg
-from agentscope.web_ui.utils import get_player_input, generate_image_from_name, get_reset_msg
+from agentscope.web.studio.utils import user_input
 
 
 class UserAgent(AgentBase):
     """User agent class"""
 
-    def __init__(self, name: str = "user", require_url: bool = False) -> None:
+    def __init__(self, name: str = "User", require_url: bool = False) -> None:
         """Initialize a UserAgent object.
 
         Arguments:
@@ -35,6 +34,7 @@ class UserAgent(AgentBase):
         self,
         x: dict = None,
         required_keys: Optional[Union[list[str], str]] = None,
+        timeout: Optional[int] = None,
     ) -> dict:
         """
         Processes the input provided by the user and stores it in memory,
@@ -53,26 +53,22 @@ class UserAgent(AgentBase):
                 (`Optional[Union[list[str], str]]`, defaults to `None`):
                 Strings that requires user to input, which will be used as
                 the key of the returned dict. Defaults to None.
+            timeout (`Optional[int]`, defaults to `None`):
+                Raise `TimeoutError` if user exceed input time, set to None
+                for no limit.
 
         Returns:
             `dict`: A dictionary representing the message object that contains
             the user's input and any additional details. This is also
             stored in the object's memory.
         """
-        if x is not None:
+        if self.memory:
             self.memory.add(x)
 
         # TODO: To avoid order confusion, because `input` print much quicker
         #  than logger.chat
-        time.sleep(0.1)
-        thread_name = threading.current_thread().name
-        if thread_name == "MainThread":
-            content = input(f"{self.name}: ")
-        else:
-            content = get_player_input(self.name,
-                                       uid=threading.current_thread().name)
-            get_reset_msg(uid=thread_name)
-
+        time.sleep(0.5)
+        content = user_input(timeout=timeout)
 
         kwargs = {}
         if required_keys is not None:
@@ -89,16 +85,24 @@ class UserAgent(AgentBase):
 
         # Add additional keys
         msg = Msg(
-            self.name,
-            content=content,
+            name=self.name,
             role="user",
+            content=content,
             url=url,
             **kwargs,  # type: ignore[arg-type]
         )
 
-        # self.speak(msg)
+        self.speak(msg)
 
         # Add to memory
-        self.memory.add(msg)
+        if self.memory:
+            self.memory.add(msg)
 
         return msg
+
+    def speak(
+        self,
+        content: Union[str, dict],
+    ) -> None:
+        """Speak the content to the audience."""
+        logger.chat(content, disable_studio=True)
