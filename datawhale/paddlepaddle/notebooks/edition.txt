@@ -1,0 +1,219 @@
+ delete mode 100644 modelscope/agentscope/.DS_Store
+ create mode 100644 modelscope/agentscope/.gitignore
+ delete mode 100644 wisemodel/.DS_Store
+(base) qaz1214@QiyudeMacBook-Pro ai-communities % git push -u origin main
+枚举对象中: 22, 完成.
+对象计数中: 100% (22/22), 完成.
+使用 12 个线程进行压缩
+压缩对象中: 100% (12/12), 完成.
+写入对象中: 100% (12/12), 123.00 KiB | 1.35 MiB/s, 完成.
+总共 12（差异 7），复用 0（差异 0），包复用 0
+remote: Resolving deltas: 100% (7/7), completed with 7 local objects.
+remote: This repository moved. Please use the new location:
+remote:   git@github.com:ZhongQiyu/ai-communities.git
+To github.com:ZhongQiyu/atomgit.git
+   11ec881..323c0ff  main -> main
+分支 'main' 设置为跟踪 'origin/main'。
+(base) qaz1214@QiyudeMacBook-Pro ai-communities % 
+  [恢复于2024年4月23日 13:37:35]
+Last login: Tue Apr 23 13:37:28 on console
+(base) qaz1214@QiyudeMacBook-Pro ai-communities % 
+  [恢复于2024年4月23日 15:53:35]
+Last login: Tue Apr 23 15:53:30 on console
+(base) qaz1214@QiyudeMacBook-Pro ai-communities % clear
+
+(base) qaz1214@QiyudeMacBook-Pro ai-communities % cd atomgit
+(base) qaz1214@QiyudeMacBook-Pro atomgit % git add .
+(base) qaz1214@QiyudeMacBook-Pro atomgit % git status
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+要提交的变更：
+  （使用 "git restore --staged <文件>..." 以取消暂存）
+	修改：     doc/keywords.txt
+
+(base) qaz1214@QiyudeMacBook-Pro atomgit % git commit -m 'add competition topic'
+[main 0192738] add competition topic
+ 1 file changed, 3 insertions(+)
+(base) qaz1214@QiyudeMacBook-Pro atomgit % git push -u origin main
+枚举对象中: 9, 完成.
+对象计数中: 100% (9/9), 完成.
+使用 12 个线程进行压缩
+压缩对象中: 100% (5/5), 完成.
+写入对象中: 100% (5/5), 532 字节 | 532.00 KiB/s, 完成.
+总共 5（差异 4），复用 0（差异 0），包复用 0
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+remote: This repository moved. Please use the new location:
+remote:   git@github.com:ZhongQiyu/ai-communities.git
+To github.com:ZhongQiyu/atomgit.git
+   69d3474..0192738  main -> main
+分支 'main' 设置为跟踪 'origin/main'。
+(base) qaz1214@QiyudeMacBook-Pro atomgit % git add .              
+(base) qaz1214@QiyudeMacBook-Pro atomgit % git status
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+要提交的变更：
+  （使用 "git restore --staged <文件>..." 以取消暂存）
+	修改：     .DS_Store
+	修改：     doc/keywords.txt
+
+(base) qaz1214@QiyudeMacBook-Pro atomgit % git commit -m 'add link'
+[main daea58b] add link
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+(base) qaz1214@QiyudeMacBook-Pro atomgit % git push -u origin main
+枚举对象中: 11, 完成.
+对象计数中: 100% (11/11), 完成.
+使用 12 个线程进行压缩
+压缩对象中: 100% (6/6), 完成.
+写入对象中: 100% (6/6), 693 字节 | 693.00 KiB/s, 完成.
+总共 6（差异 4），复用 0（差异 0），包复用 0
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+remote: This repository moved. Please use the new location:
+remote:   git@github.com:ZhongQiyu/ai-communities.git
+To github.com:ZhongQiyu/atomgit.git
+   0192738..daea58b  main -> main
+分支 'main' 设置为跟踪 'origin/main'。
+(base) qaz1214@QiyudeMacBook-Pro atomgit % cd ..
+(base) qaz1214@QiyudeMacBook-Pro ai-communities % cd datawhale
+(base) qaz1214@QiyudeMacBook-Pro datawhale % ls
+Tianji			paddlepaddle		xtuner-gui
+git			study-desk-recsys
+git-lfs-main		whale-quant
+(base) qaz1214@QiyudeMacBook-Pro datawhale % cd paddlepaddle
+(base) qaz1214@QiyudeMacBook-Pro paddlepaddle % mkdir notebooks
+(base) qaz1214@QiyudeMacBook-Pro paddlepaddle % cd notebooks
+(base) qaz1214@QiyudeMacBook-Pro notebooks % links.txt
+zsh: command not found: links.txt
+(base) qaz1214@QiyudeMacBook-Pro notebooks % vim links.txt
+(base) qaz1214@QiyudeMacBook-Pro notebooks % git status
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+尚未暂存以备提交的变更：
+  （使用 "git add <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+	修改：     ../../../atomgit/doc/keywords.txt
+	修改：     ../../.DS_Store
+
+未跟踪的文件:
+  （使用 "git add <文件>..." 以包含要提交的内容）
+	../
+
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
+(base) qaz1214@QiyudeMacBook-Pro notebooks % git add .
+(base) qaz1214@QiyudeMacBook-Pro notebooks % git status
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+要提交的变更：
+  （使用 "git restore --staged <文件>..." 以取消暂存）
+	新文件：   links.txt
+
+尚未暂存以备提交的变更：
+  （使用 "git add <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+	修改：     ../../../atomgit/doc/keywords.txt
+	修改：     ../../.DS_Store
+
+(base) qaz1214@QiyudeMacBook-Pro notebooks % rm ../../.DS_Store
+(base) qaz1214@QiyudeMacBook-Pro notebooks % git status
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+要提交的变更：
+  （使用 "git restore --staged <文件>..." 以取消暂存）
+	新文件：   links.txt
+
+尚未暂存以备提交的变更：
+  （使用 "git add/rm <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+	修改：     ../../../atomgit/doc/keywords.txt
+	删除：     ../../.DS_Store
+
+(base) qaz1214@QiyudeMacBook-Pro notebooks % git add .
+(base) qaz1214@QiyudeMacBook-Pro notebooks % git status
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+要提交的变更：
+  （使用 "git restore --staged <文件>..." 以取消暂存）
+	新文件：   links.txt
+
+尚未暂存以备提交的变更：
+  （使用 "git add/rm <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+	修改：     ../../../atomgit/doc/keywords.txt
+	删除：     ../../.DS_Store
+
+(base) qaz1214@QiyudeMacBook-Pro notebooks % cd ..
+(base) qaz1214@QiyudeMacBook-Pro paddlepaddle % cd ..
+(base) qaz1214@QiyudeMacBook-Pro datawhale % git status
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+要提交的变更：
+  （使用 "git restore --staged <文件>..." 以取消暂存）
+	新文件：   paddlepaddle/notebooks/links.txt
+
+尚未暂存以备提交的变更：
+  （使用 "git add/rm <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+	修改：     ../atomgit/doc/keywords.txt
+	删除：     .DS_Store
+
+(base) qaz1214@QiyudeMacBook-Pro datawhale % git add .
+(base) qaz1214@QiyudeMacBook-Pro datawhale % git status
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+要提交的变更：
+  （使用 "git restore --staged <文件>..." 以取消暂存）
+	删除：     .DS_Store
+	新文件：   paddlepaddle/notebooks/links.txt
+
+尚未暂存以备提交的变更：
+  （使用 "git add <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+	修改：     ../atomgit/doc/keywords.txt
+
+(base) qaz1214@QiyudeMacBook-Pro datawhale % cd ..
+(base) qaz1214@QiyudeMacBook-Pro ai-communities % cd atomgit
+(base) qaz1214@QiyudeMacBook-Pro atomgit % git add .
+(base) qaz1214@QiyudeMacBook-Pro atomgit % git status
+位于分支 main
+您的分支与上游分支 'origin/main' 一致。
+
+要提交的变更：
+  （使用 "git restore --staged <文件>..." 以取消暂存）
+	修改：     doc/keywords.txt
+	删除：     ../datawhale/.DS_Store
+	新文件：   ../datawhale/paddlepaddle/notebooks/links.txt
+
+(base) qaz1214@QiyudeMacBook-Pro atomgit % cd doc
+(base) qaz1214@QiyudeMacBook-Pro doc % vim edition.txt 
+
+针对开放原子基金会大赛的赛题 中英文网址 信息校对 4/24确定
+Rapid Aerodynamic Drag Prediction for Arbitrary Vehicles in 3D Space
+
+赛题网址 https://competition.atomgit.com/previewinfo?id=7f3f276465e9e845fd3a811d
+2d6925b5
+
+金山文档|WPS云文档 https://kdocs.cn/l/cvfSN2Zhuzlg
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+~                                                                               
+-- INSERT --
