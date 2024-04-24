@@ -26,3 +26,5 @@
 
 针对开放原子基金会大赛的赛题
 Rapid Aerodynamic Drag Prediction for Arbitrary Vehicles in 3D Space
+中英文网址 信息校对 4/24确定
+(https://competition.atomgit.com/previewinfo?id=7f3f276465e9e845fd3a811d2d6925b5)
