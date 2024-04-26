@@ -23,3 +23,6 @@
 "Human-Agent Interaction in Role-Playing Scenarios" AND AAMAS
 "Explainability and Transparency in Multi-Agent Systems" AND AAMAS
 "Multimodal Perception and Interaction in Role-Playing Agents" AND AAMAS
+
+multi-round dialogue AND agent AND AAMAS
+Explainability and Transparency in Multi-Agent Systems AND IJCAI
