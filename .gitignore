@@ -11,6 +11,7 @@ vocab.json
 *log/
 test/
 tools/
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
