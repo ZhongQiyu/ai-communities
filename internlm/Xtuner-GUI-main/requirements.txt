@@ -1,0 +1,4 @@
+datasets==2.16.1
+gradio==3.50.2
+pandas==2.2.0
+-e xtuner
