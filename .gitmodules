@@ -4,3 +4,6 @@
 [submodule "wisemodel/phi3-Chinese"]
 	path = wisemodel/phi3-Chinese
 	url = git@github.com:CrazyBoyM/phi3-Chinese.git
+[submodule "wisemodel/vue-quill-xiumi-135"]
+	path = wisemodel/vue-quill-xiumi-135
+	url = git@github.com:font-size/vue-quill-xiumi-135.git
