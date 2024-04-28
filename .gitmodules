@@ -7,3 +7,6 @@
 [submodule "wisemodel/vue-quill-xiumi-135"]
 	path = wisemodel/vue-quill-xiumi-135
 	url = git@github.com:font-size/vue-quill-xiumi-135.git
+[submodule "wisemodel/IEPile"]
+	path = wisemodel/IEPile
+	url = git@github.com:zjunlp/IEPile.git
