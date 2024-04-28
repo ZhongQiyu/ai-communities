@@ -1,0 +1,3 @@
+[submodule "wisemodel/langchain-gemini-api"]
+	path = wisemodel/langchain-gemini-api
+	url = git@github.com:shamspias/langchain-gemini-api.git
