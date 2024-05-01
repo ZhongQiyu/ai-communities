@@ -1,12 +1,19 @@
 [submodule "wisemodel/langchain-gemini-api"]
 	path = wisemodel/langchain-gemini-api
 	url = git@github.com:shamspias/langchain-gemini-api.git
+
 [submodule "wisemodel/phi3-Chinese"]
 	path = wisemodel/phi3-Chinese
 	url = git@github.com:CrazyBoyM/phi3-Chinese.git
+
 [submodule "wisemodel/vue-quill-xiumi-135"]
 	path = wisemodel/vue-quill-xiumi-135
 	url = git@github.com:font-size/vue-quill-xiumi-135.git
+
 [submodule "wisemodel/IEPile"]
 	path = wisemodel/IEPile
 	url = git@github.com:zjunlp/IEPile.git
+
+[submodule "wisemodel/wisemodel-hub/MP5/LAMM"]
+	path = wisemodel/wisemodel-hub/MP5/LAMM
+	url = git@github.com:OpenGVLab/LAMM.git
