@@ -7,37 +7,33 @@ from github import Github
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 
-class PDFGitHubExtractor:
-    def __init__(self, github_token, pdf_path):
-        self.github = Github(github_token)  # 初始化GitHub客户端
-        self.pdf_path = pdf_path            # 设置PDF文件路径
+class PDFAnalyzer:
+    def __init__(self, pdf_path):
+        self.pdf_path = pdf_path
+        self.text = self.extract_text_from_pdf()
 
     def extract_text_from_pdf(self):
         """从PDF中提取所有文本"""
         with pdfplumber.open(self.pdf_path) as pdf:
-            all_text = ''
-            for page in pdf.pages:
-                text = page.extract_text()
-                if text:
-                    all_text += text
-        return all_text
+            return " ".join([page.extract_text() for page in pdf.pages if page.extract_text()])
 
-    def search_github(self, query):
-        """根据查询在GitHub上搜索仓库，并打印克隆URL"""
-        repositories = self.github.search_repositories(query)
-        for repo in repositories:
-            print(repo.clone_url)
+    def extract_metadata(self):
+        """从PDF文本中提取论文元数据"""
+        metadata = {}
 
-    def extract_and_search(self):
-        """提取PDF文本并使用其中的标题或关键词在GitHub上搜索相关代码"""
-        extracted_text = self.extract_text_from_pdf()
-        # 假设从提取的文本中得到了论文标题或关键词
-        # 这里需要具体的逻辑来确定如何从文本中提取标题或关键词
-        # 以下仅为示例，你需要根据实际情况调整
-        title = "Your paper title here extracted from the text"
-        self.search_github(title)
+        title_match = re.search(r"\b(Title|TITLE|title)\b: (.*)", self.text)
+        metadata["title"] = title_match.group(2).strip() if title_match else ""
 
-    def fetch_data(keyword):
+        author_match = re.search(r"\b(Authors|AUTHORS|authors)\b: (.*)", self.text)
+        metadata["authors"] = author_match.group(2).strip() if author_match else ""
+
+        keywords_match = re.search(r"\b(Keywords|KEYWORDS|keywords)\b: (.*)", self.text)
+        metadata["keywords"] = keywords_match.group(2).strip() if keywords_match else ""
+
+        return metadata
+
+    def fetch_data(self, keyword):
+        """根据关键词从Google中检索数据"""
         # 指定搜索的URL（使用Google搜索为例）
         url = f"https://www.google.com/search?q={keyword}"
         # 设置请求头，模拟浏览器访问
@@ -49,10 +45,7 @@ class PDFGitHubExtractor:
             soup = BeautifulSoup(response.content, 'html.parser')
             snippets = soup.find_all('div', class_='BNeawe s3v9rd AP7Wnd')
             # 存储结果
-            results = []
-            for snippet in snippets:
-                text = snippet.get_text()
-                results.append(text)
+            results = [snippet.get_text() for snippet in snippets]
             # 将结果存为JSON文件
             with open(f"{keyword.replace(' ', '_')}_snippets.json", 'w', encoding='utf-8') as f:
                 json.dump(results, f, ensure_ascii=False, indent=4)
@@ -60,66 +53,116 @@ class PDFGitHubExtractor:
         else:
             print("Failed to retrieve data.")
 
-# 创建实例
-extractor = PDFGitHubExtractor(github_token, pdf_path)
-extractor.extract_and_search()
+    def find_urls(self):
+        """从PDF文本中提取所有URL"""
+        return re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', self.text)
 
-# 初始化PDF文件路径
-pdf_path = '/Users/yourusername/Desktop/my_paper.pdf'  # 替换为你的PDF文件路径
-# pdf_path = '<path_to_your_pdf_file.pdf>'
+class PDFGitHubAnalyzer(PDFAnalyzer):
+    def __init__(self, github_token, pdf_path):
+        super().__init__(pdf_path)
+        self.github = Github(github_token)
 
-# 从PDF中提取文本；假设论文的标题或关键词在某个固定位置，或使用正则表达式自行提取
-title = "Your paper title here extracted from the text"
-extracted_text = extract_text_from_pdf(pdf_path)
+    def search_github(self, query):
+        """在GitHub上搜索代码仓库"""
+        repositories = self.github.search_repositories(query)
+        for repo in repositories:
+            print(repo.clone_url)
 
-# 使用正则表达式查找URLs
-urls = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', all_text)
+    def extract_and_search(self):
+        """提取PDF文本并在GitHub上搜索相关代码"""
+        # 假设从提取的文本中得到了论文标题或关键词
+        title = self.extract_metadata().get("title", "")
+        # 这里需要具体的逻辑来确定如何从文本中提取标题或关键词
+        # 以下仅为示例，你需要根据实际情况调整
+        if title:
+            self.search_github(title)
 
-# 打印找到的所有URLs
-for url in urls:
-    print(url)
+    def query_external_service(title):
+        # 使用论文标题从外部服务（如Semantic Scholar）检索额外信息
+        headers = {"x-api-key": "your_api_key"}
+        response = requests.get(f"https://api.semanticscholar.org/graph/v1/paper/search?query={title}", headers=headers)
 
-# 初始化GitHub客户端
-github_token = "ghp_xxxxYYYYZZZZxxxxYYYYZZZZ"  # 替换为你的真实GitHub访问令牌
-g = Github("<your_token>")
-# g = Github("ghp_xxxxYYYYZZZZxxxxYYYYZZZZ")
+        if response.status_code == 200:
+            return response.json()
 
-# 在GitHub上搜索相关代码
-search_github(title)
+        return {}
 
-# 创建图
-G = nx.DiGraph()
+    def visualize_keywords(self, keywords, relations):
+        """绘制关键词关系图"""
+        G = nx.DiGraph()
+        G.add_nodes_from(keywords)
+        G.add_edges_from(relations)
+        nx.write_gexf(G, "network_graph.gexf")
+        plt.figure(figsize=(12, 8))
+        nx.draw(G, with_labels=True, node_color='skyblue', node_size=2000, edge_color='k', linewidths=1, font_size=15)
+        plt.title('Keyword Network')
+        plt.show()
 
-# 添加节点和边
-keywords = ['Decision Making', 'Emotional Intelligence', 'Natural Language Generation',
-            'Collaboration', 'Ethics', 'Generalization', 'Real-Time Learning',
-            'Human-Agent Interaction', 'Explainability', 'Multimodal Perception']
+# 主逻辑
+if __name__ == "__main__":
+    # 初始化PDF文件路径
+    pdf_path = "example.pdf"  # 替换为你的PDF文件路径
 
-relations = [('Emotional Intelligence', 'Human-Agent Interaction'),
-             ('Natural Language Generation', 'Decision Making'),
-             ('Decision Making', 'Collaboration'),
-             ('Ethics', 'Decision Making'),
-             ('Generalization', 'Real-Time Learning'),
-             ('Real-Time Learning', 'Explainability'),
-             ('Human-Agent Interaction', 'Multimodal Perception')]
+    # 从PDF中提取文本；假设论文的标题或关键词在某个固定位置，或使用正则表达式自行提取
+    text = extract_text_from_pdf(pdf_path)
+    title = "Your paper title here extracted from the text"
+    search_github(title)
+    metadata = extract_metadata(text)
+    if metadata.get("title"):
+        additional_info = query_external_service(metadata["title"])
+        metadata.update(additional_info)
+    print(metadata)
 
-G.add_nodes_from(keywords)
-G.add_edges_from(relations)
+    # 创建实例
+    analyzer = PDFGitHubAnalyzer(github_token, pdf_path)
+    analyzer.extract_and_search()
 
-# 保存为 GEXF 文件
-nx.write_gexf(G, "network_graph.gexf")
+    # 使用正则表达式查找URLs
+    urls = analyzer.find_urls()
 
+    # 打印找到的所有URLs
+    for url in urls:
+        print(url)
+    analyzer.visualize_keywords(keywords, relations)
 
-# 绘制网络图
-plt.figure(figsize=(12, 8))
-nx.draw(G, with_labels=True, node_color='skyblue', node_size=2000, edge_color='k', linewidths=1, font_size=15)
-plt.title('Keyword Network')
-plt.show()
+    # 添加节点，即关键字
+    keywords = ['Decision Making', 'Emotional Intelligence', 'Natural Language Generation',
+                'Collaboration', 'Ethics', 'Generalization', 'Real-Time Learning',
+                'Human-Agent Interaction', 'Explainability', 'Multimodal Perception']
+    for keyword in keywords:
+        analyzer.fetch_data(keyword)
 
-# 示例使用一个关键词
-fetch_data('Decision Making in Multi-Agent Systems')
+    # 初始化GitHub客户端并搜索相关代码
+    github_token = "ghp_xxxxYYYYZZZZxxxxYYYYZZZZ"  # 替换为你的真实GitHub访问令牌
+    g = Github("<your_token>")
 
-# 遍历所有关键词并抓取数据
-for keyword in keywords:
+    # 添加边
+    relations = [('Emotional Intelligence', 'Human-Agent Interaction'),
+                 ('Natural Language Generation', 'Decision Making'),
+                 ('Decision Making', 'Collaboration'),
+                 ('Ethics', 'Decision Making'),
+                 ('Generalization', 'Real-Time Learning'),
+                 ('Real-Time Learning', 'Explainability'),
+                 ('Human-Agent Interaction', 'Multimodal Perception')]
+
+    # 创建图
+    G = nx.DiGraph()
+    G.add_nodes_from(keywords)
+    G.add_edges_from(relations)
+
+    # 保存为 GEXF 文件
+    nx.write_gexf(G, "network_graph.gexf")
+
+    # 绘制网络图
+    plt.figure(figsize=(12, 8))
+    nx.draw(G, with_labels=True, node_color='skyblue', node_size=2000, edge_color='k', linewidths=1, font_size=15)
+    plt.title('Keyword Network')
+    plt.show()
+
     # 示例使用一个关键词
-    fetch_data(keyword)
+    fetch_data('Decision Making in Multi-Agent Systems')
+
+    # 完整示例，遍历所有关键词并抓取数据
+    for keyword in keywords:
+        # 示例使用一个关键词
+        fetch_data(keyword)
