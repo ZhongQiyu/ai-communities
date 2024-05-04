@@ -10,7 +10,7 @@ AAMAS:
 IJCAI:
 “multi-agent collaboration” AND IJCAI
 “role play simulation” AND IJCAI
-“visual question answering” AND “agents” AND IJCAI
+("VQA" OR "visual question answering") AND ("agent-based systems" OR "autonomous agents") AND (IJCAI)
 “autonomous agents” AND AI AND IJCAI
 “AI multi-agent systems” AND IJCAI
 “reinforcement learning” AND “multi-agent systems” AND IJCAI
