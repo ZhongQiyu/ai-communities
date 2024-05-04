@@ -1,0 +1,17 @@
+AAMAS:
+“multi-agent systems” AND AAMAS
+“agent-based role play” OR “multi-agent role play” AND AAMAS
+“vision question answering” AND “multi-agent” AND AAMAS
+“cooperative agents” AND AAMAS
+“autonomous agents” AND AAMAS
+“multi-agent learning” AND AAMAS
+“distributed intelligence” AND AAMAS
+
+IJCAI:
+“multi-agent collaboration” AND IJCAI
+“role play simulation” AND IJCAI
+“visual question answering” AND “agents” AND IJCAI
+“autonomous agents” AND AI AND IJCAI
+“AI multi-agent systems” AND IJCAI
+“reinforcement learning” AND “multi-agent systems” AND IJCAI
+“decision making” AND “multi-agent systems” AND IJCAI
