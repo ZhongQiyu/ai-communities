@@ -1,5 +1,8 @@
 .DS_Store
+<<<<<<< HEAD
 
 wisemodel/models/Meta-Llama-3-70B-Instruct-GGUF/
 wisemodel/models/gemma-1-1-2b-it-git/
 wisemodel/models/gemma-1.1-7b-it/
+=======
+>>>>>>> 661c778161f1688caaea1adeaac8f6eb640fc3f6
