@@ -1,0 +1,5 @@
+.DS_Store
+
+wisemodel/models/Meta-Llama-3-70B-Instruct-GGUF/
+wisemodel/models/gemma-1-1-2b-it-git/
+wisemodel/models/gemma-1.1-7b-it/
